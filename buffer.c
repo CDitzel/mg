@@ -348,6 +348,8 @@ listbuffers(int f, int n)
 	bp->b_modes[0] = name_mode("fundamental");
 	bp->b_modes[1] = name_mode("listbufmap");
 	bp->b_nmodes = 1;
+	nextwind(f,n);
+	forwline(f,2);
 
 	return (TRUE);
 }
@@ -460,9 +462,9 @@ listbuf_goto_buffer_helper(int f, int n, int only)
 	curbp = bp;
 	curwp = wp;
 
-	if (only)
-		ret = (onlywind(FFRAND, 1));
-	else
+
+		 (onlywind(FFRAND, 1));
+
 		ret = TRUE;
 
 cleanup:
@@ -1090,4 +1092,80 @@ findbuffer(char *fn)
 
 	bp = bfind(bname, TRUE);
 	return (bp);
+}
+
+
+/*
+ * Switch the current window to the next buffer. System buffers,
+ * except *scratch*, are skipped.
+ */
+
+int
+nextbuffer(int f, int n)
+{
+    struct buffer *bp, *bp1;
+    
+    if (n < 0) return prevbuffer(f, -n);
+    else if (n == 0) return TRUE;
+
+    bp = curwp->w_bufp;
+    bp1 = bp;
+
+    while (n > 0) {
+	bp1 = bp->b_bufp;
+
+	while (bp1 != bp) {
+	    if (bp1 == NULL) {
+		bp1 = bheadp;
+	    } else if (bp1->b_flag & 0x200) {
+		bp1 = bp1->b_bufp;
+	    } else
+		break;
+	}
+
+	if (bp1 == bp) return TRUE;
+
+	bp = bp1;
+	n--;
+    }
+
+    curbp = bp1;
+    showbuffer(curbp, curwp, 1);
+    return TRUE;
+}
+
+int
+prevbuffer(int f, int n)
+{
+    struct buffer *bp, *bp1, *outbp = NULL;
+
+    if (n < 0) return nextbuffer(f, -n);
+    else if (n == 0) return TRUE;
+
+    bp = curwp->w_bufp;
+
+    while (n > 0) {
+	bp1 = bp->b_bufp;
+
+	while (bp1 != bp) {
+	    if (bp1 == NULL) {
+		bp1 = bheadp;
+	    } else {
+		if (!(bp1->b_flag & 0x200)) {
+		    outbp = bp1;
+		}
+
+		bp1 = bp1->b_bufp;
+	    }
+	}
+
+	if (outbp == NULL) return TRUE;
+
+	bp = outbp;
+	n--;
+    }
+
+    curbp = outbp;
+    showbuffer(curbp, curwp, 1);
+    return TRUE;
 }

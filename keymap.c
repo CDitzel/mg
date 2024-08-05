@@ -126,7 +126,9 @@ static PF cXcB[] = {
 	rescan,			/* ^D */
 	rescan,			/* ^E */
 	filevisit,		/* ^F */
-	ctrlg			/* ^G */
+	ctrlg,			/* ^G */
+	prevbuffer,
+	nextbuffer
 };
 
 static PF cXcJ[] = {

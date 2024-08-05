@@ -138,6 +138,7 @@ static struct funmap functnames[] = {
 	{killbuffer_cmd, "kill-buffer", 1},
 	{killline, "kill-line", 1},
 	{killpara, "kill-paragraph", 1},
+	{killlinebackward, "kill-line-backward", 1},
 	{zaptochar, "zap-to-char", 1},
 	{zapuptochar, "zap-up-to-char", 1},
 	{killregion, "kill-region", 0},
@@ -234,8 +235,10 @@ static struct funmap functnames[] = {
 	{tagsvisit, "visit-tags-table", 0},
 	{showcpos, "what-cursor-position", 0},
 	{filewrite, "write-file", 1},
+	{nextbuffer, "next-buffer", 1},
+	{prevbuffer, "prev-buffer", 1},
 	{yank, "yank", 1},
-	{NULL, NULL, 0}
+	{NULL, NULL, 0},
 };
 
 void

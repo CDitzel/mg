@@ -427,7 +427,7 @@ int		 kremove(int);
 int		 kchunk(char *, RSIZE, int);
 int		 killline(int, int);
 int		 yank(int, int);
-
+int		 killlinebackward(int, int);
 /* window.c X */
 struct mgwin	*new_window(struct buffer *);
 int		 reposition(int, int);
@@ -452,6 +452,8 @@ int		 killbuffer_cmd(int, int);
 int		 savebuffers(int, int);
 int		 listbuffers(int, int);
 int		 addlinef(struct buffer *, char *, ...);
+int              nextbuffer(int, int);
+int              prevbuffer(int, int);
 #define	 addline(bp, text)	addlinef(bp, "%s", text)
 int		 anycb(int);
 int		 bclear(struct buffer *);

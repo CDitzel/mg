@@ -263,3 +263,72 @@ yank(int f, int n)
 	return (TRUE);
 }
 
+int
+killlinebackward(int f, int n)
+{
+    n = 0;
+	struct line	*nextp;
+	RSIZE	 chunk;
+	int	 i, c;
+
+	/* clear kill buffer if last wasn't a kill */
+	if ((lastflag & CFKILL) == 0)
+		kdelete();
+	thisflag |= CFKILL;
+
+	#if 0
+	if (!(f & FFARG)) {
+		for (i = curwp->w_doto; i < llength(curwp->w_dotp); ++i)
+			if ((c = lgetc(curwp->w_dotp, i)) != ' ' && c != '\t')
+				break;
+		if (i == llength(curwp->w_dotp))
+			chunk = llength(curwp->w_dotp) - curwp->w_doto + 1;
+		else {
+			chunk = llength(curwp->w_dotp) - curwp->w_doto;
+			if (chunk == 0)
+				chunk = 1;
+		}
+
+	}
+
+	else if (n > 0) {
+		chunk = llength(curwp->w_dotp) - curwp->w_doto;
+		nextp = lforw(curwp->w_dotp);
+		if (nextp != curbp->b_headp)
+			chunk++;		/* newline */
+		if (nextp == curbp->b_headp)
+			goto done;		/* EOL */
+		i = n;
+		while (--i) {
+			chunk += llength(nextp);
+			nextp = lforw(nextp);
+			if (nextp != curbp->b_headp)
+				chunk++;	/* newline */
+			if (nextp == curbp->b_headp)
+				break;		/* EOL */
+		}
+	} else {
+
+#endif
+	    
+		/* n <= 0 */
+		chunk = curwp->w_doto;
+		curwp->w_doto = 0;
+		i = n;
+		while (i++) {
+			if (lforw(curwp->w_dotp))
+				chunk++;
+			curwp->w_dotp = lback(curwp->w_dotp);
+			curwp->w_rflag |= WFMOVE;
+			chunk += llength(curwp->w_dotp);
+		}
+//	}
+	/*
+	 * KFORW here is a bug.  Should be KBACK/KFORW, but we need to
+	 * rewrite the ldelete code (later)?
+	 */
+done:
+	if (chunk)
+		return (ldelete(chunk, KFORW));
+	return (TRUE);
+}
