@@ -398,23 +398,18 @@ makelist(void)
 		}
 		if (nbytes == 0)
 		    continue; // TODO(cditzel MB): dont show information-less entries
-		/* if (addlinef(blp, "%c%c%c %-*.*s%c%-6d", */
-		/* if (addlinef(blp, "%c%c%c %-*.*s%s   %c  %-2d   kB   %-*d", */
-		if (addlinef(blp, "%c%c%c %-*.*s%s   %5c    %*d",
-		    (bp == curbp) ? '>' : ' ',	/* current buffer ? */
+
+
+		if (addlinef(blp, "%c%c%c %-*s %-6d %s",
+//		    (bp == curbp) ? '>' : ' ',	/* current buffer ? */
+		    ' ',	/* current buffer ? */
 		    ((bp->b_flag & BFCHG) != 0) ? '*' : ' ',	/* changed ? */
-		    ((bp->b_flag & BFREADONLY) != 0) ? 'r' : ' ',
-		    w/2,		/* four chars already written */
-		    w/2,		/* four chars already written */
+		    ((bp->b_flag & BFREADONLY) != 0) ? '*' : ' ',
+		    w - 5,		/* four chars already written */
 		    bp->b_bname,	/* buffer name */
-                    bp->b_cwd,
-		    strlen(bp->b_bname) < w - 5 ? ' ' : '$', /* truncated? */
-			     /* (nbytes/1024),		/\* buffer size *\/ */
-			     w/8,		/* seven chars already written */
-		    /* ) == FALSE) */
-			     bp->b_lines
-			) == FALSE)
-		    		    /* bp->b_fname) == FALSE) */
+		    bp->b_lines,
+		    bp->b_cwd) == FALSE)
+		    
 			return (NULL);
 	}
 	blp->b_dotp = bfirstlp(blp);		/* put dot at beginning of

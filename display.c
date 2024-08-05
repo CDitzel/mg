@@ -812,7 +812,7 @@ modeline(struct mgwin *wp, int modelinecolor)
 		vtputc('-', wp);
 	}
 	vtputc(' ', wp);
-	vtputc(' ', wp);
+	
 	n = 5;
 	
 	/* n += vtputs("Mg: ", wp); */
