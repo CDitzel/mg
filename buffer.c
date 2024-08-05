@@ -348,8 +348,9 @@ listbuffers(int f, int n)
 	bp->b_modes[0] = name_mode("fundamental");
 	bp->b_modes[1] = name_mode("listbufmap");
 	bp->b_nmodes = 1;
+	
 	nextwind(f,n);
-	forwline(f,2);
+	/* forwline(f,2); */
 
 	return (TRUE);
 }
@@ -377,13 +378,14 @@ makelist(void)
 
 	listbuf_ncol = ncol;		/* cache ncol for listbuf_goto_buffer */
 
-	if (addlinef(blp, "%-*s%s", w, " MR Buffer", "Size   File") == FALSE ||
-	    addlinef(blp, "%-*s%s", w, " -- ------", "----   ----") == FALSE)
-		return (NULL);
+	/* if (addlinef(blp, "%-*s%s  %s  %s", w/2, " MR Buffer", "Size kb", "#Lines", "Directory") == FALSE || */
+	/*     addlinef(blp, "%-*s%s  %s  %s", w/2, " -- ------", "-------", "------", "---------") == FALSE) */
+	/* 	return (NULL); */
 
 	for (bp = bheadp; bp != NULL; bp = bp->b_bufp) {
 		RSIZE nbytes;
-
+		if(bp->b_flag & BFREADONLY)
+		    continue; // TODO(cditzel MB): dont show read-only entries
 		nbytes = 0;			/* Count bytes in buf.	 */
 		if (bp != blp) {
 			lp = bfirstlp(bp);
@@ -394,18 +396,25 @@ makelist(void)
 			if (nbytes)
 				nbytes--;	/* no bonus newline	 */
 		}
-
-		if (addlinef(blp, "%c%c%c %-*.*s%c%-6d %-*s",
+		if (nbytes == 0)
+		    continue; // TODO(cditzel MB): dont show information-less entries
+		/* if (addlinef(blp, "%c%c%c %-*.*s%c%-6d", */
+		/* if (addlinef(blp, "%c%c%c %-*.*s%s   %c  %-2d   kB   %-*d", */
+		if (addlinef(blp, "%c%c%c %-*.*s%s   %5c    %*d",
 		    (bp == curbp) ? '>' : ' ',	/* current buffer ? */
 		    ((bp->b_flag & BFCHG) != 0) ? '*' : ' ',	/* changed ? */
-		    ((bp->b_flag & BFREADONLY) != 0) ? '*' : ' ',
-		    w - 5,		/* four chars already written */
-		    w - 5,		/* four chars already written */
+		    ((bp->b_flag & BFREADONLY) != 0) ? 'r' : ' ',
+		    w/2,		/* four chars already written */
+		    w/2,		/* four chars already written */
 		    bp->b_bname,	/* buffer name */
+                    bp->b_cwd,
 		    strlen(bp->b_bname) < w - 5 ? ' ' : '$', /* truncated? */
-		    nbytes,		/* buffer size */
-		    w - 7,		/* seven chars already written */
-		    bp->b_fname) == FALSE)
+			     /* (nbytes/1024),		/\* buffer size *\/ */
+			     w/8,		/* seven chars already written */
+		    /* ) == FALSE) */
+			     bp->b_lines
+			) == FALSE)
+		    		    /* bp->b_fname) == FALSE) */
 			return (NULL);
 	}
 	blp->b_dotp = bfirstlp(blp);		/* put dot at beginning of
@@ -423,7 +432,7 @@ listbuf_goto_buffer(int f, int n)
 static int
 listbuf_goto_buffer_one(int f, int n)
 {
-	return (listbuf_goto_buffer_helper(f, n, 1));
+    return (listbuf_goto_buffer_helper(f, n, 1));
 }
 
 static int
@@ -463,9 +472,10 @@ listbuf_goto_buffer_helper(int f, int n, int only)
 	curwp = wp;
 
 
-		 (onlywind(FFRAND, 1));
-
-		ret = TRUE;
+	if (only)
+	    ret = (onlywind(FFRAND, 1));
+	else
+	    ret = TRUE;
 
 cleanup:
 	free(line);
