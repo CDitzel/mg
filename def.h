@@ -425,9 +425,10 @@ void		 kdelete(void);
 int		 kinsert(int, int);
 int		 kremove(int);
 int		 kchunk(char *, RSIZE, int);
+int		 killlinebackward(int, int);
 int		 killline(int, int);
 int		 yank(int, int);
-int		 killlinebackward(int, int);
+
 /* window.c X */
 struct mgwin	*new_window(struct buffer *);
 int		 reposition(int, int);
@@ -451,9 +452,10 @@ int		 killbuffer(struct buffer *);
 int		 killbuffer_cmd(int, int);
 int		 savebuffers(int, int);
 int		 listbuffers(int, int);
-int		 addlinef(struct buffer *, char *, ...);
 int              nextbuffer(int, int);
 int              prevbuffer(int, int);
+int              bufed(int, int);
+int		 addlinef(struct buffer *, char *, ...);
 #define	 addline(bp, text)	addlinef(bp, "%s", text)
 int		 anycb(int);
 int		 bclear(struct buffer *);
@@ -668,7 +670,7 @@ int		 readpattern(char *);
 int		 zapuptochar(int, int);
 int		 zaptochar(int, int);
 int		 zap(int, int);
-
+int              searchsymbolatpoint(int, int);
 /* spawn.c X */
 int		 spawncli(int, int);
 
