@@ -467,10 +467,10 @@ listbuf_goto_buffer_helper(int f, int n, int only)
 	curwp = wp;
 
 
-	if (only)
+//	if (only)
 	    ret = (onlywind(FFRAND, 1));
-	else
-	    ret = TRUE;
+//	else
+//	    ret = TRUE;
 
 cleanup:
 	free(line);

@@ -808,14 +808,13 @@ modeline(struct mgwin *wp, int modelinecolor)
 		vtputc('*', wp);
 		vtputc('*', wp);
 	} else {
-		vtputc('-', wp);
-		vtputc('-', wp);
+		vtputc(' ', wp);
+		vtputc(' ', wp);
 	}
 	vtputc(' ', wp);
-	
+		vtputc(' ', wp);
 	n = 5;
-	
-	/* n += vtputs("Mg: ", wp); */
+	//n += vtputs("Mg: ", wp);
 	if (bp->b_bname[0] != '\0')
 		n += vtputs(&(bp->b_bname[0]), wp);
 	while (n < 20) {			/* Pad out with blanks.	 */
@@ -823,45 +822,43 @@ modeline(struct mgwin *wp, int modelinecolor)
 		++n;
 	}
 
-	if (linenos && colnos)
-	    len = snprintf(sl, sizeof(sl), "  L%d--C%d", wp->w_dotline,
+
+
+if (linenos && colnos)
+	len = snprintf(sl, sizeof(sl), "--L%d--C%d", wp->w_dotline,
 		    getcolpos(wp));
 	else if (linenos)
-	    len = snprintf(sl, sizeof(sl), "  %d/%d", wp->w_dotline, bp->b_lines);
+		len = snprintf(sl, sizeof(sl), "%d/%d", wp->w_dotline, bp->b_lines);
 	else if (colnos)
-		len = snprintf(sl, sizeof(sl), "  C%d", getcolpos(wp));
+		len = snprintf(sl, sizeof(sl), "--C%d", getcolpos(wp));
 	if ((linenos || colnos) && len < sizeof(sl) && len != -1)
 		n += vtputs(sl, wp);
-
-	int s = 0;
-	while (s < 15) {	
-		vtputc(' ', wp);
-		++s;
-	}
-
-	vtputc('(', wp);
-	++n;
-	for (md = 0; ; ) {
-		n += vtputs(bp->b_modes[md]->p_name, wp);
-		if (++md > bp->b_nmodes)
-			break;
-		vtputc('-', wp);
-		++n;
-	}
+		
+//		vtputc(' ', wp);
+//		vtputc(' ', wp);
+//		vtputc(' ', wp);
+//	vtputc('(', wp);
+//	++n;
+//	for (md = 0; ; ) {
+//		n += vtputs(bp->b_modes[md]->p_name, wp);
+//		if (++md > bp->b_nmodes)
+//			break;
+//		vtputc(' ', wp);
+//		++n;
+//	}
+		
 	/* XXX These should eventually move to a real mode */
 	if (macrodef == TRUE)
 		n += vtputs("-def", wp);
 	if (globalwd == TRUE)
 		n += vtputs("-gwd", wp);
-	vtputc(')', wp);
+//	vtputc(')', wp);
 	++n;
-
 
 	while (n < ncol) {			/* Pad out.		 */
 		vtputc(' ', wp);
 		++n;
 	}
-	
 }
 
 /*

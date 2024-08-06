@@ -921,10 +921,11 @@ zap(int including, int n)
 int
 searchsymbolatpoint(int f, int n)
 {
+
     forwchar(f,n);
     backword(f,n);
-
-
+		
+#if 1
     struct line	*clp;		/* Saved line pointer */
     int		 c;
     int		 cbo;		/* Saved offset */
@@ -938,12 +939,12 @@ searchsymbolatpoint(int f, int n)
 
     int dir = SRCH_FORW;
     if (macrodef) {
-	dobeep();
-	ewprintf("Can't isearch in macro");
-	return (FALSE);
+						dobeep();
+						ewprintf("Can't isearch in macro");
+						return (FALSE);
     }
-    for (cip = 0; cip < NSRCH; cip++)
-	cmds[cip].s_code = SRCH_NOPR;
+		for (cip = 0; cip < NSRCH; cip++)
+		cmds[cip].s_code = SRCH_NOPR;
 
     (void)strlcpy(opat, pat, sizeof(opat));
     cip = 0;
@@ -956,23 +957,25 @@ searchsymbolatpoint(int f, int n)
     success = TRUE;
     is_prompt(dir, TRUE, success);
     
-    
+    // w specific
 
+		update(CMODE);
+			
     clp = curwp->w_dotp;
     cbo = curwp->w_doto;
     firstc = 1;
     if (pptr == -1)
-	pptr = 0;
-    if (dir == SRCH_BACK) {
-	/* when isearching backwards, cbo is the start of the pattern */
-	cbo += pptr;
-    }
+		pptr = 0;
+		if (dir == SRCH_BACK) {
+						/* when isearching backwards, cbo is the start of the pattern */
+						cbo += pptr;
+		}
 
-    /* if the search is case insensitive, add to pattern using lowercase */
-    xcase = 0;
-    for (i = 0; pat[i]; i++)
-	if (ISUPPER(CHARMASK(pat[i])))
-	    xcase = 1;
+		/* if the search is case insensitive, add to pattern using lowercase */
+		xcase = 0;
+		for (i = 0; pat[i]; i++)
+		if (ISUPPER(CHARMASK(pat[i])))
+		xcase = 1;
 
     while (cbo < llength(clp)) {
 	c = lgetc(clp, cbo++);
@@ -997,7 +1000,8 @@ searchsymbolatpoint(int f, int n)
 	}
     }
     is_prompt(dir, pptr < 0, success);
-
+		forwisearch(f,n);
+#endif
 }
 
 
