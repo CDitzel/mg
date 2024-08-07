@@ -400,14 +400,14 @@ makelist(void)
 		    continue; // TODO(cditzel MB): dont show information-less entries
 
 
-		if (addlinef(blp, "%c%c%c %-*s %-6d %s",
+		if (addlinef(blp, "%c%c%c %-*s %s",
 //		    (bp == curbp) ? '>' : ' ',	/* current buffer ? */
 		    ' ',	/* current buffer ? */
 		    ((bp->b_flag & BFCHG) != 0) ? '*' : ' ',	/* changed ? */
 		    ((bp->b_flag & BFREADONLY) != 0) ? '*' : ' ',
 		    w - 5,		/* four chars already written */
 		    bp->b_bname,	/* buffer name */
-		    bp->b_lines,
+//		    bp->b_lines,
 		    bp->b_cwd) == FALSE)
 		    
 			return (NULL);
