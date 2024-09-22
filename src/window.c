@@ -228,8 +228,8 @@ splitwind(int f, int n)
 	wp->w_markline = curwp->w_markline;
 
 	/* figure out which half of the screen we're in */
-	ntru = (curwp->w_ntrows - 1) / 2;	/* Upper size */
-	ntrl = (curwp->w_ntrows - 1) - ntru;	/* Lower size */
+	ntrl = (curwp->w_ntrows - 1) / 4;	/* Upper size */
+	ntru = (curwp->w_ntrows - 1) - ntrl;	/* Lower size */
 
 	for (lp = curwp->w_linep, ntrd = 0; lp != curwp->w_dotp;
 	    lp = lforw(lp))
@@ -238,7 +238,8 @@ splitwind(int f, int n)
 	lp = curwp->w_linep;
 
 	/* old is upper window */
-	if (ntrd <= ntru) {
+	// cditzel: always open splits below	
+	//if (ntrd <= ntru) {
 		/* hit mode line */
 		if (ntrd == ntru)
 			lp = lforw(lp);
@@ -247,6 +248,8 @@ splitwind(int f, int n)
 		curwp->w_wndp = wp;
 		wp->w_toprow = curwp->w_toprow + ntru + 1;
 		wp->w_ntrows = ntrl;
+
+	#if 0
 	/* old is lower window */
 	} else {
 		wp1 = NULL;
@@ -270,7 +273,7 @@ splitwind(int f, int n)
 		while (ntru--)
 			lp = lforw(lp);
 	}
-
+	#endif
 	/* adjust the top lines if necessary */
 	curwp->w_linep = lp;
 	wp->w_linep = lp;

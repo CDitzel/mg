@@ -12,6 +12,8 @@
 #include <ctype.h>
 #include <signal.h>
 #include <stdio.h>
+#include <limits.h>
+#include <stdlib.h> 
 
 #include "def.h"
 
@@ -535,4 +537,41 @@ joinline(int f, int n)
 	undo_boundary_enable(FFRAND, 1);
 
 	return (TRUE);
+}
+
+
+void recentf(){
+    char filepath[PATH_MAX];
+
+    /* Construct path string to get to this user's home dir */
+    snprintf(filepath, PATH_MAX, "%s/%s", getenv("HOME"), "mega/recentf.mg");
+
+    FILE * fptr = fopen(filepath, "w");
+    if (fptr == NULL)
+    {
+        perror("Error opening file");
+        return;
+    }
+    struct buffer *blp;
+    struct line *lp;
+
+    for (struct buffer *bp = bheadp; bp != NULL; bp = bp->b_bufp) {
+	RSIZE nbytes = 0;
+    	  if (bp != blp) {
+            lp = bfirstlp(bp);
+            while (lp != bp->b_headp) {
+              nbytes += llength(lp) + 1;
+              lp = lforw(lp);
+            }
+            if (nbytes)
+              nbytes--; /* no bonus newline  */
+          }
+          if (nbytes == 0)
+            continue;
+          if (bp->b_flag & BFREADONLY)
+            continue; 
+	  // write list of open buffes to file
+          fprintf(fptr, "%s%s ", bp->b_cwd, bp->b_bname);
+        }
+      fclose(fptr);
 }

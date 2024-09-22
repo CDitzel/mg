@@ -410,7 +410,7 @@ do_cscope(int i)
 	}
 	addline(bp, title);
 	addline(bp, "");
-	addline(bp, "-------------------------------------------------------------------------------");
+	
 	while ((len = getline(&buf, &sz, fpipe)) != -1) {
 		if (buf[len - 1] == *bp->b_nlchr)
 			buf[len - 1] = '\0';
@@ -424,7 +424,7 @@ do_cscope(int i)
 	if (ferror(fpipe))
 		ewprintf("Problem reading pipe");
 	pclose(fpipe);
-	addline(bp, "-------------------------------------------------------------------------------");
+	
 	if (nores == 0)
 		ewprintf("No matches were found.");
 	return (popbuftop(bp, WNONE));

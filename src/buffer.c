@@ -114,6 +114,10 @@ usebufname(const char *bufp)
 	else if ((bp = bfind(bufp, TRUE)) == NULL)
 		return (FALSE);
 
+	// cditzel
+	while (bp->b_flag & BFREADONLY)
+               bp = bp->b_altb;
+
 	/* and put it in current window */
 	curbp = bp;
 	rc = showbuffer(bp, curwp, WFFRAME | WFFULL);
@@ -131,6 +135,8 @@ usebufname(const char *bufp)
 int
 usebuffer(int f, int n)
 {
+	// cditzel: switch directly w/o promp
+	#if 0
 	char    bufn[NBUFN], *bufp;
 
 	/* Get buffer to use from user */
@@ -142,8 +148,8 @@ usebuffer(int f, int n)
 
 	if (bufp == NULL)
 		return (ABORT);
-
-	return (usebufname(bufp));
+	#endif
+	return (usebufname(curbp->b_altb->b_bname));
 }
 
 /*
@@ -360,6 +366,10 @@ listbuffers(int f, int n)
 	bp->b_modes[0] = name_mode("fundamental");
 	bp->b_modes[1] = name_mode("listbufmap");
 	bp->b_nmodes = 1;
+	
+	// cditzel: directly go to opened buffer list window and refresh recentf list
+	nextwind(f, n);
+        recentf();
 
 	return (TRUE);
 }
@@ -387,11 +397,14 @@ makelist(void)
 
 	listbuf_ncol = ncol;		/* cache ncol for listbuf_goto_buffer */
 
+	// cditzel: remove header of *buffer-list* buffer, it's just visual noise
+	#if 0
 	if (addlinef(blp, "%-*s%s", w, " MR Buffer", "Size   File") == FALSE ||
 	    addlinef(blp, "%-*s%s", w, " -- ------", "----   ----") == FALSE)
 		return (NULL);
-
+	#endif
 	for (bp = bheadp; bp != NULL; bp = bp->b_bufp) {
+		#if 0
 		RSIZE nbytes;
 
 		nbytes = 0;			/* Count bytes in buf.	 */
@@ -404,19 +417,22 @@ makelist(void)
 			if (nbytes)
 				nbytes--;	/* no bonus newline	 */
 		}
+		#endif
+		
+		// cditzel: skip dired and other read-only buffers in the list
+		if (bp->b_flag & BFREADONLY)
+		      continue; 
+		// cditzel: skip current buffer to be displayed
+		if (bp == curbp)
+		      continue;
 
-		if (addlinef(blp, "%c%c%c %-*.*s%c%-6d %-*s",
-		    (bp == curbp) ? '>' : ' ',	/* current buffer ? */
-		    ((bp->b_flag & BFCHG) != 0) ? '*' : ' ',	/* changed ? */
-		    ((bp->b_flag & BFREADONLY) != 0) ? '*' : ' ',
-		    w - 5,		/* four chars already written */
-		    w - 5,		/* four chars already written */
-		    bp->b_bname,	/* buffer name */
-		    (int)strlen(bp->b_bname) < w - 5 ? ' ' : '$', /* truncated? */
-		    nbytes,		/* buffer size */
-		    w - 7,		/* seven chars already written */
-		    bp->b_fname) == FALSE)
-			return (NULL);
+		if (addlinef(blp, "%c%c%c %-*s %s", ' ',
+			((bp->b_flag & BFCHG) != 0) ? '*' : ' ',
+			((bp->b_flag & BFREADONLY) != 0) ? '*' : ' ',
+	            	w - 5,       /* four chars already written */
+        	        bp->b_bname, /* buffer name */
+	        	bp->b_cwd) == FALSE)
+		    return (NULL);
 	}
 	blp->b_dotp = bfirstlp(blp);		/* put dot at beginning of
 						 * buffer */
@@ -472,10 +488,8 @@ listbuf_goto_buffer_helper(int f, int n, int only)
 	curbp = bp;
 	curwp = wp;
 
-	if (only)
-		ret = (onlywind(FFRAND, 1));
-	else
-		ret = TRUE;
+	// cditzel: go to selected buffer and make it the only window
+        ret = (onlywind(FFRAND, 1));
 
 cleanup:
 	free(line);
@@ -799,6 +813,18 @@ popbuf(struct buffer *bp, int flags)
 	if (showbuffer(bp, wp, WFFULL) != TRUE)
 		return (NULL);
 
+	// cditzel: order buffer-list by last visited instead of initial opening
+	for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+	{
+ 	   if (b->b_bufp == bp)
+	   {
+	      b->b_bufp = bp->b_bufp;
+	      // bp->b_bufp = bheadp->b_bufp; skip blist buffer?
+	      bp->b_bufp = bheadp;
+	      bheadp = bp;
+	      break;
+	    }
+	}
 	return (wp);
 }
 

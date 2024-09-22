@@ -228,7 +228,8 @@ notnum:
 					/* Ensure enabled, not just toggled */
 					if (init_fcn_name)
 						init_fcn(FFOTHARG, 1);
-					nfiles++;
+// cditzel: start with latest file in only window instead of splits
+//					nfiles++;
 				}
 				if (allbro)
 					curbp->b_flag |= BFREADONLY;
@@ -334,6 +335,7 @@ quit(int f, int n)
 #ifdef ENABLE_CTAGS
 		closetags();
 #endif
+		recentf();
 		exit(0);
 	}
 	return (TRUE);

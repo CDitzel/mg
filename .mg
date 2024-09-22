@@ -1,6 +1,6 @@
 
 display-help-mode 0
-display-time-mode 1
+display-time-mode 0
 
 
 auto-indent-mode 1
@@ -14,7 +14,7 @@ global-set-key "\^h" delete-backward-char
 global-set-key "\^[h" backward-kill-word
 #global-set-key "\^[o" mark-paragraph
 global-set-key "\^[g" goto-line
-global-set-key "\^u" kill-line-backward
+#global-set-key "\^u" kill-line-backward
 global-set-key "\^[u" kill-paragraph
 global-set-key "\^[p" scroll-one-line-down
 global-set-key "\^[n" scroll-one-line-up

@@ -158,9 +158,9 @@ fi
 export NDAS_PARTNER='daimler'
 alias ndas=' cd ~/git-ndas/ndas && source scripts/envsetup.sh && export NDAS_ARTIFACT_REPOSITORY=ndas-daimler && buildauth login'
 
-mg () {
-  ~/.restore_mg.sh $@
-}
+#mg () {
+#  ~/.restore_mg.sh $@
+#}
 
 export PATH=$PATH:$HOME/.local/bin
 

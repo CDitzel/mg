@@ -808,8 +808,8 @@ modeline(struct mgwin *wp, int modelinecolor)
 	vscreen[n]->v_flag |= (VFCHG | VFHBAD);	/* Recompute, display.	 */
 	vtmove(n, 0);				/* Seek to right line.	 */
 	bp = wp->w_bufp;
-	vtputc('-', wp);			/* Encoding in GNU Emacs */
-	vtputc(':', wp);			/* End-of-lline style    */
+	vtputc(' ', wp);			/* Encoding in GNU Emacs */
+	vtputc(' ', wp);			/* End-of-lline style    */
 	if ((bp->b_flag & BFREADONLY) != 0) {
 		vtputc('%', wp);
 		if ((bp->b_flag & BFCHG) != 0)
@@ -820,10 +820,10 @@ modeline(struct mgwin *wp, int modelinecolor)
 		vtputc('*', wp);
 		vtputc('*', wp);
 	} else {
-		vtputc('-', wp);
-		vtputc('-', wp);
+		vtputc(' ', wp);
+		vtputc(' ', wp);
 	}
-	vtputc('-', wp);
+	vtputc(' ', wp);
 	vtputc(' ', wp);
 	n = 6;
 	if (bp->b_bname[0] != '\0') {
@@ -831,11 +831,15 @@ modeline(struct mgwin *wp, int modelinecolor)
 		n += vtputs("  ", wp);
 	}
 
-	while (n < 27) {			/* Pad out with blanks.	 */
+	while (n < 50) {			/* Pad out with blanks.	 */
 		vtputc(' ', wp);
 		++n;
 	}
 
+	// cditzel: show total num of files in modeline
+        len = snprintf (sl, sizeof (sl), "%d/%d", wp->w_dotline, bp->b_lines);
+
+	#if 0
 	if (linenos && colnos)
 		len = snprintf(sl, sizeof(sl), "(%d,%d)  ", wp->w_dotline, getcolpos(wp));
 	else if (linenos)
@@ -844,6 +848,8 @@ modeline(struct mgwin *wp, int modelinecolor)
 		len = snprintf(sl, sizeof(sl), "C%d  ", getcolpos(wp));
 	else
 		len = 0;
+	#endif	
+
 	if ((linenos || colnos) && len < (int)sizeof(sl) && len != -1)
 		n += vtputs(sl, wp);
 
@@ -851,7 +857,8 @@ modeline(struct mgwin *wp, int modelinecolor)
 		vtputc(' ', wp);
 		++n;
 	}
-
+	
+	#if 0
 	vtputc('(', wp);
 	++n;
 	for (md = 0; ; ) {
@@ -869,7 +876,7 @@ modeline(struct mgwin *wp, int modelinecolor)
 		n += vtputs(" gwd", wp);
 	vtputc(')', wp);
 	++n;
-
+	#endif
 	/* Show time/date/mail */
 	if (timesh) {
 		char buf[20];

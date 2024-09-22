@@ -916,3 +916,102 @@ zap(int including, int n)
 	clearmark(FFARG, 0);
 	return (TRUE);
 }
+
+
+int
+searchsymbolatpoint (int f, int n)
+{
+
+  forwchar (f, n);
+  backword (f, n);
+
+  struct line *clp; /* Saved line pointer */
+  int c;
+  int cbo; /* Saved offset */
+  int success;
+  int pptr;   
+  int firstc;
+  int xcase;
+  int i;
+  char opat[NPAT];
+  //    int        cdotline;  /* Saved linenumber */
+
+  int dir = SRCH_FORW;
+  if (macrodef)
+    {
+      dobeep ();
+      ewprintf ("Can't isearchin macro");
+      return (FALSE);
+ }
+  for (cip = 0; cip < NSRCH; cip++)
+    cmds[cip].s_code = SRCH_NOPR;
+
+  (void)strlcpy (opat, pat, sizeof (opat));
+  cip = 0;
+  pptr = -1;
+  clp = curwp->w_dotp;
+  cbo = curwp->w_doto;
+  int cdotline = curwp->w_dotline;
+  is_lpush ();
+  is_cpush (SRCH_BEGIN);
+  success = TRUE;
+  is_prompt (dir, TRUE, success);
+
+  // w specific
+
+  update (CMODE);
+
+  clp = curwp->w_dotp;
+  cbo = curwp->w_doto;
+  firstc = 1;
+  if (pptr == -1)
+    pptr = 0;
+  if (dir == SRCH_BACK)
+    {
+      /* when isearching backwards, cbo is the start of the pattern */
+      cbo += pptr;
+    }
+
+  /* if the search is case insensitive, add to pattern using lowercase */
+  xcase = 0;
+  for (i = 0; pat[i]; i++)
+    if (ISUPPER (CHARMASK (pat[i])))
+      xcase = 1;
+
+  while (cbo < llength (clp))
+    {
+      c = lgetc (clp, cbo++);
+      if ((!firstc && !isalnum (c)))
+        break;
+
+      if (pptr == NPAT - 1)
+        {
+  dobeep ();
+          break;
+        }
+
+      firstc = 0;
+      if (!xcase && ISUPPER (c))
+        c = TOLOWER (c);
+
+      pat[pptr++] = c;
+      pat[pptr] = '\0';
+      /* cursor only moves when isearching forwards */
+      if (dir == SRCH_FORW)
+        {
+          curwp->w_doto = cbo;
+          curwp->w_rflag |= WFMOVE;
+          update (CMODE);
+        }
+    }
+
+  is_prompt (dir, pptr < 0, success);
+  forwisearch (f, n);
+  return (TRUE);
+}
+
+
+
+
+
+
