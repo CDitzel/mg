@@ -1,0 +1,16 @@
+ 
+DAZEL_VOLUMES += [
+    "/remote:/remote",
+]
+ 
+ 
+# depending on the (potentially changing) instance type
+# the instance-storage may or may not be available.
+# So this dazel-mount needs to be dynamically specified
+import os
+if os.path.exists("/mnt/instance-storage/lost+found"):
+    DAZEL_VOLUMES += [
+        "/lhome/cditzel/rrn//:/lhome/cditzel/rrn/:rw",
+        "/tmp/:/tmp/",
+        "/lhome/cditzel/clips/:/lhome/cditzel/clips:rw",
+    ]

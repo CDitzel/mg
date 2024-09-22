@@ -1,0 +1,24 @@
+ [core]
+	editor = mg
+ [user]
+	name = Carsten Ditzel
+	email = carsten.ditzel@mercedes-benz.com
+ [credential]
+	helper = cache
+ [http]
+   sslVerify = false
+ [color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+ [alias]
+	last = log -1 HEAD
+	ac = !git add -A && git commit -a
+	s = status -s
+	unstage = reset HEAD --
+	lg = log --color=auto --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+[merge]
+	tool = mg
+[github]
+	user = CDitzel
