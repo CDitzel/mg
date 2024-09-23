@@ -22,6 +22,106 @@ static int	fillcol = 70;
 static int	findpara(void);
 static int 	do_gotoeop(int, int, int *);
 
+/* 
+ * cditzel: Move to start of scope. 
+ */  
+int
+gotoboscope(int f, int n)
+{
+    int col, nobrace, col_old;
+ 
+    /* the other way... */
+    if (n < 0)
+        return (gotoeoscope(f, -n));
+
+        nobrace = 0;
+        while (lback(curwp->w_dotp) != curbp->b_headp) {
+            curwp->w_dotp = lback(curwp->w_dotp);
+            curwp->w_doto = 0;
+            col_old = col;
+            col = 0;
+
+            while (col < llength(curwp->w_dotp) && ((int)lgetc(curwp->w_dotp, col)) != 123)
+                col++;
+
+            if (col >= llength(curwp->w_dotp)) {
+                if (nobrace){
+                    break;
+				}
+			} else
+                nobrace = 1;
+  
+            curwp->w_dotline--;
+		}
+        curwp->w_dotp = lforw(curwp->w_dotp);
+        curwp->w_doto = col_old;
+
+    /* force screen update */
+    curwp->w_rflag |= WFMOVE;
+    return (TRUE);
+}
+
+
+/*
+* cditzel: Move to end of scope.
+ * See comments for gotoboscope(). Same, but moving forwards.
+ */
+int
+gotoeoscope(int f, int n)
+{
+    int i;
+
+    return(do_gotoeoscope(f, n, &i));
+}
+                                                                                                                                         
+int
+do_gotoeoscope(int f, int n, int *i)
+{
+    int col, nobrace, j = 0, old_col;
+
+    /* the other way... */
+    if (n < 0)
+        return (gotobop(f, -n));
+     
+    /* for each one asked for */
+		*i = ++j;
+        nobrace = 0;
+
+        while (lforw(curwp->w_dotp) != curbp->b_headp) {
+            curwp->w_dotp = lforw(curwp->w_dotp);
+
+            curwp->w_doto = 0;
+            old_col = col;
+            col = 0;
+
+            while (col < llength(curwp->w_dotp) && ((int)lgetc(curwp->w_dotp, col)) != 125)
+                col++;
+
+			if (col >= llength(curwp->w_dotp)) {                                                                                         
+                if (nobrace)                                                                                                             
+                    break;                                                                                                               
+			} else                                                                                                                       
+                nobrace = 1;                                                                                                             
+                                                                                                                                         
+            curwp->w_dotline++;                                                                                                          
+                                                                                                                                         
+            /* do not continue after end of buffer */                                                                                    
+            if (lforw(curwp->w_dotp) == curbp->b_headp) {                                                                                
+                gotoeol(FFRAND, 1);                                                                                                      
+                curwp->w_rflag |= WFMOVE;                                                                                                
+                return (FALSE);                                                                                                          
+			}                                                                                                                            
+		}                                                                                                                                    
+            curwp->w_dotp = lback(curwp->w_dotp);                                                                                        
+            curwp->w_doto = old_col;                                                                                                     
+                                                                                                                                         
+    /* force screen update */                                                                                                            
+    curwp->w_rflag |= WFMOVE;                                                                                                            
+    return (TRUE);                                                                                                                       
+}
+
+
+
 /*
  * Move to start of paragraph.
  * Move backwards by line, checking from the 1st character forwards for the

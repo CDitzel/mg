@@ -33,6 +33,9 @@ global-set-key "\^[," pop-tag-mark
 global-set-key "\^[/" sy
 global-set-key "\^[o" other-window
 global-set-key "\^x\^k" kill-buffer
+global-set-key "\^[a" beg-of-scope
+global-set-key "\^[e" end-of-scope
+
 
 
 
