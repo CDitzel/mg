@@ -373,8 +373,9 @@ do_cscope(int i)
 	sz = 0;
 
 	/* If current buffer isn't a source file just return */
-	if (fnmatch("*.[chy]", curbp->b_fname, 0) != 0)
-		return(dobeep_msg("C-c s not defined"));
+    // cditzel: dont abort if cscope functions are invoked in unknown file type 
+	// if (fnmatch("*.[chy]", curbp->b_fname, 0) != 0)
+	//	return(dobeep_msg("C-c s not defined"));
 
 	if (curtoken(0, 1, pattern) == FALSE)
 		return (FALSE);

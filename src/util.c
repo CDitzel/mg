@@ -544,7 +544,7 @@ void recentf(){
     char filepath[PATH_MAX];
 
     /* Construct path string to get to this user's home dir */
-    snprintf(filepath, PATH_MAX, "%s/%s", getenv("HOME"), "mega/recentf.mg");
+    snprintf(filepath, PATH_MAX, "%s/%s", getenv("HOME"), "sync/recentf.mg");
 
     FILE * fptr = fopen(filepath, "w");
     if (fptr == NULL)
@@ -571,7 +571,7 @@ void recentf(){
           if (bp->b_flag & BFREADONLY)
             continue; 
 	  // write list of open buffes to file
-          fprintf(fptr, "%s%s ", bp->b_cwd, bp->b_bname);
+          fprintf(fptr, "%s%s \n", bp->b_cwd, bp->b_bname);
         }
       fclose(fptr);
 }

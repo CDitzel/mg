@@ -1,6 +1,6 @@
 
 display-help-mode 0
-display-time-mode 0
+display-time-mode 1
 
 
 auto-indent-mode 1
