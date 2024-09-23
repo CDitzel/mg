@@ -93,8 +93,17 @@ bg_lila='\[\033[45;36m\]'
 bg_tuerkis='\[\033[46;XXm\]'
 bg_ligthgrey='\[\033[47;36m\]'
 
+if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
+	host="office"
+elif [ "$HOSTNAME" = cmtcleu63327915 ]; then
+	host="dell"
+else 
+	host="lenovo"
+fi	
+
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}${Dunkeltuerkis}\h\[\033[00m\]\[\033[01;34m\]${hellgruen}\w${gelb}\$(__git_ps1)${farblos} "
+
+    PS1="${debian_chroot:+($debian_chroot)}${Dunkeltuerkis}$host\[\033[00m\]\[\033[01;34m\]${hellgruen}\w${gelb}\$(__git_ps1)${farblos} "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
