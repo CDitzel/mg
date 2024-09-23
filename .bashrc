@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=-1
+HISTFILESIZE=-1
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -94,7 +94,7 @@ bg_tuerkis='\[\033[46;XXm\]'
 bg_ligthgrey='\[\033[47;36m\]'
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}${Dunkeltuerkis}office\[\033[00m\]\[\033[01;34m\]${hellgruen}\w${gelb}\$(__git_ps1)${farblos} "
+    PS1="${debian_chroot:+($debian_chroot)}${Dunkeltuerkis}\h\[\033[00m\]\[\033[01;34m\]${hellgruen}\w${gelb}\$(__git_ps1)${farblos} "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -125,9 +125,9 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias l='ls -alF'
+alias ll='ls -alF'
 alias la='ls -A'
-alias ll='ls -CF'
+alias l='ls -CF'
 alias mkdir='mkdir -p'
 alias ..='cd ..'
 
