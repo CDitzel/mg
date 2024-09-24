@@ -61,20 +61,24 @@ const char* get_filename_ext(const char* filename) {
 }
 
 int gotoboblock(int f, int n) {
+#if 0
   if (strcmp(get_filename_ext(curbp->b_fname), "c") == 0) {
     gotoboscope(f, n);
   } else if (strcmp(get_filename_ext(curbp->b_fname), "py") == 0) {
     gotoboindent(f, n);
   } else
+#endif
     gotobop(f, n);
 }
 
 int gotoeoblock(int f, int n) {
+#if 0
   if (strcmp(get_filename_ext(curbp->b_fname), "c") == 0) {
     gotoeoscope(f, n);
   } else if (strcmp(get_filename_ext(curbp->b_fname), "py") == 0) {
     gotoeoindent(f, n);
   } else
+#endif
     gotoeop(f, n);
 }
 
@@ -158,7 +162,7 @@ int gotoboindent(int f, int n) {
       col++;
 
     int b = isnonblanks(curwp->w_dotp, llength(curwp->w_dotp));
-    if (col < col_old && b) {
+    if (col <= col_old && b) {
       break;
     }
     idx++;
@@ -188,7 +192,7 @@ int gotoboscope(int f, int n) {
     col = 0;
 
     while (col < llength(curwp->w_dotp) &&
-           ((int)lgetc(curwp->w_dotp, col)) != 123)
+		(lgetc(curwp->w_dotp, col)) != '}')
       col++;
 
     if (col >= llength(curwp->w_dotp)) {
@@ -199,9 +203,17 @@ int gotoboscope(int f, int n) {
       nobrace = 1;
 
     curwp->w_dotline--;
-  }
-  curwp->w_dotp = lforw(curwp->w_dotp);
-  curwp->w_doto = col_old;
+
+}
+    if (lback(curwp->w_dotp) == curbp->b_headp) {
+      gotoeol(FFRAND, 1);
+      curwp->w_rflag |= WFMOVE;
+      return (FALSE);
+    }
+
+	 curwp->w_dotp = lforw(curwp->w_dotp);  
+	 curwp->w_doto = col_old;
+ 
 
   /* force screen update */
   curwp->w_rflag |= WFMOVE;
@@ -240,7 +252,8 @@ int do_gotoeoscope(int f, int n, int* i) {
       col = 0;
 
       while (col < llength(curwp->w_dotp) &&
-             ((int)lgetc(curwp->w_dotp, col)) != 125)
+             (lgetc(curwp->w_dotp, col)) != '{')
+//             ((int)lgetc(curwp->w_dotp, col)) != 125)
         col++;
       
       if (col >= llength(curwp->w_dotp)) {
@@ -253,7 +266,7 @@ int do_gotoeoscope(int f, int n, int* i) {
     }
 
     curwp->w_dotp = lback(curwp->w_dotp);
-    curwp->w_doto = old_col;
+    curwp->w_doto = old_col + 1;
 
     /* do not continue after end of buffer */
     if (lforw(curwp->w_dotp) == curbp->b_headp) {

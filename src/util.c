@@ -549,7 +549,7 @@ void recentf(){
     FILE * fptr = fopen(filepath, "w");
     if (fptr == NULL)
     {
-        perror("Error opening file");
+        perror("Error opening file for writing recentf list");
         return;
     }
     struct buffer *blp;

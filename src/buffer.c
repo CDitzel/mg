@@ -135,7 +135,7 @@ usebufname(const char *bufp)
 int
 usebuffer(int f, int n)
 {
-	// cditzel: switch directly w/o promp
+	// cditzel: switch directly w/o prompt
 	#if 0
 	char    bufn[NBUFN], *bufp;
 
@@ -145,10 +145,14 @@ usebuffer(int f, int n)
 	else
 		bufp = eread("Switch to buffer (default %s): ", bufn, NBUFN,
 		    EFNUL | EFNEW | EFBUF, curbp->b_altb->b_bname);
-
+	
 	if (bufp == NULL)
 		return (ABORT);
-	#endif
+    #endif
+
+	if (curbp->b_altb == NULL){
+		return (ABORT);
+	}	
 	return (usebufname(curbp->b_altb->b_bname));
 }
 
@@ -369,7 +373,7 @@ listbuffers(int f, int n)
 	
 	// cditzel: directly go to opened buffer list window and refresh recentf list
 	nextwind(f, n);
-        recentf();
+    // recentf();
 
 	return (TRUE);
 }
@@ -403,9 +407,11 @@ makelist(void)
 	    addlinef(blp, "%-*s%s", w, " -- ------", "----   ----") == FALSE)
 		return (NULL);
 	#endif
+	
 	for (bp = bheadp; bp != NULL; bp = bp->b_bufp) {
-     	// cditzel: remove scratch buffer 
-		#if 1
+
+		// cditzel: remove scratch buffer 
+		#if 0
 		RSIZE nbytes;
 
 		nbytes = 0;			/* Count bytes in buf.	 */
@@ -425,7 +431,8 @@ makelist(void)
 		// cditzel: skip dired and other read-only buffers in the list
 		if (bp->b_flag & BFREADONLY)
 		      continue; 
-		// cditzel: skip current buffer to be displayed
+
+		// cdintzel: skip current buffer to be displayed
 		if (bp == curbp)
 		      continue;
 
@@ -437,10 +444,9 @@ makelist(void)
 	        	bp->b_cwd) == FALSE)
 		    return (NULL);
 	}
-	blp->b_dotp = bfirstlp(blp);		/* put dot at beginning of
-						 * buffer */
+	blp->b_dotp = bfirstlp(blp);		/* put dot at beginning of buffer */
 	blp->b_doto = 0;
-	return (blp);				/* All done		 */
+	return (blp);				/* All done	*/
 }
 
 static int
