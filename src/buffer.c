@@ -114,9 +114,9 @@ usebufname(const char *bufp)
 	else if ((bp = bfind(bufp, TRUE)) == NULL)
 		return (FALSE);
 
-	// cditzel
+	// cditzel: skip dired buffers
 	while (bp->b_flag & BFREADONLY)
-               bp = bp->b_altb;
+        bp = bp->b_altb;
 
 	/* and put it in current window */
 	curbp = bp;
@@ -404,7 +404,8 @@ makelist(void)
 		return (NULL);
 	#endif
 	for (bp = bheadp; bp != NULL; bp = bp->b_bufp) {
-		#if 0
+     	// cditzel: remove scratch buffer 
+		#if 1
 		RSIZE nbytes;
 
 		nbytes = 0;			/* Count bytes in buf.	 */
@@ -417,6 +418,8 @@ makelist(void)
 			if (nbytes)
 				nbytes--;	/* no bonus newline	 */
 		}
+		if (nbytes == 0)
+			continue;
 		#endif
 		
 		// cditzel: skip dired and other read-only buffers in the list

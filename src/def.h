@@ -702,8 +702,8 @@ int		 tutorial(int, int);
 /* paragraph.c X */
 int		 gotobop(int, int);
 int		 gotoeop(int, int);
-int		 gotoboscope(int, int);
-int		 gotoeoscope(int, int);
+int		 gotoboblock(int, int);
+int		 gotoeoblock(int, int);
 int		 fillpara(int, int);
 int		 killpara(int, int);
 int		 fillword(int, int);

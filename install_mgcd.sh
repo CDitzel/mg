@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# delleadwhite and trailwhtie bind to keys
+
 CURRENT_DIR=$(dirname "$(realpath "$0")")
 REMOTE_URL="git-av.nvidia.com"
 
