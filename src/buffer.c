@@ -150,9 +150,9 @@ usebuffer(int f, int n)
 		return (ABORT);
     #endif
 
-	if (curbp->b_altb == NULL){
-		return (ABORT);
-	}	
+	//if (curbp->b_altb == NULL){
+	//	return (ABORT);
+	//}	
 	return (usebufname(curbp->b_altb->b_bname));
 }
 
