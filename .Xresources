@@ -1,7 +1,7 @@
-xterm*selectToClipboard: true
+nxterm*selectToClipboard: true
 xterm*disallowedWindowOps: 20,21,SetXProp
 xterm*faceName: Monospace
-xterm*faceSize: 12
+Xterm*Facesize: 20
 xterm*background: black
 xterm*foreground: grey
 XTerm*Fullscreen: false
@@ -15,3 +15,8 @@ XTerm.vt100.metaSendsEscape: true
 XTerm*cursorBlink: false
 XTerm*cursorBlinkTime: 2000   # Adjust this value to control blink duration
 XTerm*cursorOffTime: 2000      # Adjust this value for how long the cursor is off
+
+
+xTerm*metaSendsEscape: true
+xTerm*eightBitInput: false
+XTerm*vt100.eightBitInput: false

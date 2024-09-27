@@ -544,7 +544,7 @@ void recentf(){
     char filepath[PATH_MAX];
 
     /* Construct path string to get to this user's home dir */
-    snprintf(filepath, PATH_MAX, "%s/%s", getenv("HOME"), "sync/recentf.mg");
+    snprintf(filepath, PATH_MAX, "%s/%s", getenv("HOME"), "recentf.mg");
 
     FILE * fptr = fopen(filepath, "w");
     if (fptr == NULL)

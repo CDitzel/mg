@@ -373,6 +373,7 @@ listbuffers(int f, int n)
 	
 	// cditzel: directly go to opened buffer list window and refresh recentf list
 	nextwind(f, n);
+	forwisearch(f,n);
     // recentf();
 
 	return (TRUE);

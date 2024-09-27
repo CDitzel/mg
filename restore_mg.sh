@@ -7,8 +7,9 @@ if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
 	#echo $buffers
 	#source ./recentf.sh
 	#recentf
+mg ~/sync/daimler.mg ~/sync/wiki.mg $buffers $@
 fi
 
-mg ~/sync/daimler.mg ~/sync/wiki.mg $buffers $@
+mg $@
 
 

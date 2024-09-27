@@ -32,6 +32,7 @@ ln -svf $CURRENT_DIR/.dazelrc ~/.dazelrc
 ln -svf $CURRENT_DIR/user.bazelrc ~/git-ndas/ndas/user.bazelrc
 ln -svf $CURRENT_DIR/.netrc ~/.netrc
 
+gsettings set org.gnome.desktop.default-applications.terminal exec '/usr/bin/xterm'
 
 mkdir -p ${HOME}/.local/bin
 ln -svf $CURRENT_DIR/src/mg ~/.local/bin/mg

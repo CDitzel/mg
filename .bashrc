@@ -31,11 +31,6 @@ shopt -s checkwinsize
 shopt -s globstar
 
 
-# Uncomment For A Colored Prompt, If The Terminal Has The Capability; Turned
-# Off By Default To Not Distract The user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
 if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
 	host="office"
 elif [ "$HOSTNAME" = cmtcleu63327915 ]; then
@@ -59,7 +54,7 @@ shopt -s globstar
 # Uncomment For A Colored Prompt, If The Terminal Has The Capability; Turned
 # Off By Default To Not Distract The user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
     host="office"
@@ -72,19 +67,16 @@ fi
 PS1="\u@$host:\w\$(__git_ps1)$ "
 export LS_COLORS='di=0;37:ln=03;37:fi=0;37:pi=33:so=36:bd=33;44:cd=33;44:or=31;40:ex=01;37'
 
-# some more ls aliases
 alias l='ls -alF --color=auto' 
-# some more ls aliases
-alias l='ls -alF --color=auto'
+alias ll='ls -alF --color=auto'
 alias mkdir='mkdir -p'
 alias ..='cd ..'
 
 #export NDAS_PARTNER='daimler'
 alias ndas=' cd ~/git-ndas/ndas && source scripts/envsetup.sh && export NDAS_ARTIFACT_REPOSITORY=ndas-daimler && buildauth login'
 
-mg () {
-  ~/.restore_mg.sh $@
-}
-
 export PATH=$PATH:$HOME/.local/bin
 
+mg (){
+	~/.restore_mg.sh $@
+}
