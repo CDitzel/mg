@@ -1,0 +1,17 @@
+xterm*selectToClipboard: true
+xterm*disallowedWindowOps: 20,21,SetXProp
+xterm*faceName: Monospace
+xterm*faceSize: 12
+xterm*background: black
+xterm*foreground: grey
+XTerm*Fullscreen: false
+xterm*saveLines: 5000000
+XTerm*selectToClipboard: true
+XTerm*translations: #override \
+    Shift Ctrl <Key> C: copy-selection(CLIPBOARD) \n\
+    Shift Ctrl <Key> V: insert-selection(CLIPBOARD)
+
+XTerm.vt100.metaSendsEscape: true
+XTerm*cursorBlink: false
+XTerm*cursorBlinkTime: 2000   # Adjust this value to control blink duration
+XTerm*cursorOffTime: 2000      # Adjust this value for how long the cursor is off
