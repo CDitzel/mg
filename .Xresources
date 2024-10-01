@@ -1,22 +1,80 @@
-nxterm*selectToClipboard: true
+xterm*VT100.geometry: 130x50
+XTerm*geometry: 80x24
+XTerm*dynamicColors: true
+XTerm*multiScroll: true
+
+XTerm*toolBar: false
+XTerm*menuBar: false
+XTerm*scrollBar: false
+
+
+xterm*selectToClipboard: true
 xterm*disallowedWindowOps: 20,21,SetXProp
-xterm*faceName: Monospace
-Xterm*Facesize: 20
+xterm*faceName: DejaVu Sans Mono
+Xterm*Facesize: 30
+XTerm*lineSpace: 2
+XTerm*smoothScroll: true
+
+XTerm*boldMode: true
+XTerm*faceNameDoublesize: DejaVu Sans Mono
+
 xterm*background: black
 xterm*foreground: grey
+XTerm*cursorColor: #d30102
+
 XTerm*Fullscreen: false
 xterm*saveLines: 5000000
-XTerm*selectToClipboard: true
-XTerm*translations: #override \
-    Shift Ctrl <Key> C: copy-selection(CLIPBOARD) \n\
-    Shift Ctrl <Key> V: insert-selection(CLIPBOARD)
-
-XTerm.vt100.metaSendsEscape: true
-XTerm*cursorBlink: false
-XTerm*cursorBlinkTime: 2000   # Adjust this value to control blink duration
-XTerm*cursorOffTime: 2000      # Adjust this value for how long the cursor is off
 
 
+XTerm*scrollTtyOutput: false
+XTerm*scrollKey: true
+
+
+
+XTerm*cursorBlink: true
+XTerm*cursorBlinkTime: 20000   # Adjust this value to control blink duration
+XTerm*cursorOffTime: 20000      # Adjust this value for how long the cursor is off
 xTerm*metaSendsEscape: true
 xTerm*eightBitInput: false
-XTerm*vt100.eightBitInput: false
+XTerm*eightBitOutput: true
+
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+
+XTerm*visualBell: true   # Flash instead of beep
+XTerm*bellIsUrgent: false
+XTerm*bellSuppressTime: 100
+
+
+! Only select text
+XTerm*highlightSelection: true
+! Remove trailing spaces
+XTerm*trimSelection: true
+
+
+!! Keybinding ========================================================
+! http://blog.rot13.org/2010/03/change-font-size-in-xterm-using-keyboard.html
+! - change fontsize on the fly (ctrl+plus = increase ; ctrl+minus = decrease, ctrl+0 = default)
+! - copy/paste hotkey (ctrl+shift+c = copy ; ctrl+shift+v = paste)
+! - open url (clickable links)
+!   1) double click to highlight the full url
+!   2) Shift + click it to open it
+XTerm.vt100.translations: #override \n\
+  Ctrl <Key> minus: smaller-vt-font() \n\
+  Ctrl <Key> plus: larger-vt-font() \n\
+  Ctrl <Key> 0: set-vt-font(d) \n\
+  Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+  Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+  Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY) \n\
+  <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+  <Btn2Up>: insert-selection(PRIMARY)
+
+
+XTerm*font: 7x13
+XTerm*font1: 6x10
+XTerm*font2: 7x13
+XTerm*font3: 8x13
+XTerm*font4: 9x15
+XTerm*font5: 10x20
+XTerm*font6: 12x24
+XTerm*font7: 14x28
