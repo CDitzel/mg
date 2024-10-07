@@ -1,15 +1,21 @@
-
+ 
+make-backup-files 0
 display-help-mode 0
-display-time-mode 1
-
 
 auto-indent-mode 1
-auto-fill-mode 1
+#auto-fill-mode 1
+set-tab-width 4
+ 
+auto-indent-mode 1
+#auto-fill-mode 1
 make-backup-files 0
 #set-fill-column 80
+#set-default-mode c-mode
+#set-default-mode fill
+no-tab-mode
 set-tab-width 4
 #set-default-mode fill
-
+ 
 global-set-key "\^h" delete-backward-char
 global-set-key "\^[h" backward-kill-word
 #global-set-key "\^[o" mark-paragraph
@@ -35,9 +41,6 @@ global-set-key "\^[o" other-window
 global-set-key "\^x\^k" kill-buffer
 global-set-key "\^[a" beg-of-block
 global-set-key "\^[e" end-of-block
-
-
-
 
 auto-execute *.c c-mode
 auto-execute *.h c-mode

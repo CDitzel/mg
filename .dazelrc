@@ -13,6 +13,7 @@ DAZEL_VOLUMES += [
 	"/lhome/cditzel/rrn//:/lhome/cditzel/rrn/:rw",
 	"/tmp/:/tmp/",
 	"/lhome/cditzel/clips/:/lhome/cditzel/clips/",
+	"/lhome/cditzel/sessions/:/lhome/cditzel/sessions/",
 ]
 
 

@@ -64,7 +64,13 @@ else
     host="lenovo"
 fi
 
-export PS1="\e[01;36m\u@$host:\e[01;32m\w\e[01;33m\$(__git_ps1) \e[m"
+
+#export PS1='\[\e[0;36m\]\u\[\e[0m\]@\[\e[0;36m\]${host}\[\e[0m\]:\[\e[0;33m\]\W\[\e[0m\]\[\e[0;33m\]$(__git_ps1 " (%s)")\[\e[0m\]\$ '
+export PS1='\[\e[0;36m\][${host}]\[\e[0m\] \[\e[0;32m\]\W\[\e[0m\]\[\e[0;33m\]$(__git_ps1 " (%s)")\[\e[0m\] '
+
+
+#export PS1="\e[01;36m\u@$host:\e[01;32m\w\e[01;33m\$(__git_ps1) \e[m"
+
 export LS_COLORS='di=0;37:ln=03;37:fi=0;37:pi=33:so=36:bd=33;44:cd=33;44:or=31;40:ex=01;32'
 
 alias l='ls -alF --color=auto' 

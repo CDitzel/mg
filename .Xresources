@@ -2,10 +2,13 @@ xterm*VT100.geometry: 130x50
 XTerm*geometry: 80x24
 XTerm*dynamicColors: true
 XTerm*multiScroll: true
-
+xTerm*metaSendsEscape: true
 XTerm*toolBar: false
 XTerm*menuBar: false
 XTerm*scrollBar: false
+xterm*background: black
+xterm*foreground: grey
+XTerm*cursorColor: green
 
 
 xterm*selectToClipboard: true
@@ -18,9 +21,6 @@ XTerm*smoothScroll: true
 XTerm*boldMode: true
 XTerm*faceNameDoublesize: DejaVu Sans Mono
 
-xterm*background: black
-xterm*foreground: grey
-XTerm*cursorColor: #d30102
 
 XTerm*Fullscreen: false
 xterm*saveLines: 5000000
@@ -34,7 +34,7 @@ XTerm*scrollKey: true
 XTerm*cursorBlink: true
 XTerm*cursorBlinkTime: 20000   # Adjust this value to control blink duration
 XTerm*cursorOffTime: 20000      # Adjust this value for how long the cursor is off
-xTerm*metaSendsEscape: true
+
 xTerm*eightBitInput: false
 XTerm*eightBitOutput: true
 
@@ -78,3 +78,4 @@ XTerm*font4: 9x15
 XTerm*font5: 10x20
 XTerm*font6: 12x24
 XTerm*font7: 14x28
+XTerm*metaSendsEscape: true
