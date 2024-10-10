@@ -35,6 +35,9 @@ if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
 	host="office"
 elif [ "$HOSTNAME" = cmtcleu63327915 ]; then
 	host="dell"
+elif [ "$HOSTNAME" = smtcae001205 ]; then
+	echo $HOSTNAME
+	host="hks"
 else 
 	host="lenovo"
 fi	
@@ -54,17 +57,13 @@ shopt -s globstar
 # Uncomment For A Colored Prompt, If The Terminal Has The Capability; Turned
 # Off By Default To Not Distract The user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+#force_color_prompt=yes
 
-if [ "$HOSTNAME" = cmtcdeu55025274 ]; then
-    host="office"
-elif [ "$HOSTNAME" = cmtcleu63327915 ]; then
-    host="dell"
-else
-    host="lenovo"
-fi
+export PS1='\[\e[0;36m\]${host}:\[\e[0m\]\[\e[0;32m\]\w\[\e[0m\]\[\e[0;33m\]$(__git_ps1 " (%s)")\[\e[0m\] '
 
-export PS1="\e[01;36m\u@$host:\e[01;32m\w\e[01;33m\$(__git_ps1) \e[m"
+
+#export PS1="\e[01;36m\u@$host:\e[01;32m\w\e[01;33m\$(__git_ps1) \e[m"
+
 export LS_COLORS='di=0;37:ln=03;37:fi=0;37:pi=33:so=36:bd=33;44:cd=33;44:or=31;40:ex=01;32'
 
 alias l='ls -alF --color=auto' 

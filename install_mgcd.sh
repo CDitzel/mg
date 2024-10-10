@@ -16,7 +16,7 @@ REMOTE_URL="git-av.nvidia.com"
 ./autogen.sh
 #clang-format -i -style=LLVM src/*.c src/*.h
 make clean
-./configure --with-startup="$(pwd)"/.mg --disable-compile --disable-ctags --disable-togglenl --enable-size-optimizations --without-tutorial --without-docs --enable-silent-rules --disable-dependency-tracking #--without-curses
+./configure --with-startup="$(pwd)"/.mg --disable-notab --disable-compile --disable-ctags --disable-togglenl --enable-size-optimizations --without-tutorial --without-docs --enable-silent-rules --disable-dependency-tracking #--without-curses
 make -j$(nproc)
 #sudo make install
 
