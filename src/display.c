@@ -837,7 +837,7 @@ modeline(struct mgwin *wp, int modelinecolor)
 	}
 
 	// cditzel: show total num of files in modeline
-        len = snprintf (sl, sizeof (sl), "%d/%d", wp->w_dotline, bp->b_lines);
+        len = snprintf (sl, sizeof (sl), "%d/%d C%d   ", wp->w_dotline, bp->b_lines, getcolpos(wp));
 
 	#if 0
 	if (linenos && colnos)

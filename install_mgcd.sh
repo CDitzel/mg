@@ -16,7 +16,8 @@ REMOTE_URL="git-av.nvidia.com"
 ./autogen.sh
 #clang-format -i -style=LLVM src/*.c src/*.h
 make clean
-./configure --with-startup="$(pwd)"/.mg --disable-notab --disable-compile --disable-ctags --disable-togglenl --enable-size-optimizations --without-tutorial --without-docs --enable-silent-rules --disable-dependency-tracking #--without-curses
+./configure -q -n --with-startup="$(pwd)"/.mg --disable-togglenl --enable-size-optimizations --without-tutorial --without-docs --enable-silent-rules --disable-dependency-tracking --without-curses
+
 make -j$(nproc)
 #sudo make install
 
@@ -30,7 +31,7 @@ ln -svf $CURRENT_DIR/.gitconfig ~/.gitconfig
 ln -svf $CURRENT_DIR/restore_mg.sh ~/.restore_mg.sh
 ln -svf $CURRENT_DIR/.dazelrc ~/.dazelrc
 ln -svf $CURRENT_DIR/user.bazelrc ~/git-ndas/ndas/user.bazelrc
-ln -svf $CURRENT_DIR/.netrc ~/.netrc
+#ln -svf $CURRENT_DIR/.netrc ~/.netrc
 
 gsettings set org.gnome.desktop.default-applications.terminal exec '/usr/bin/xterm'
 

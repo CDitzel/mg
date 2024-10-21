@@ -70,6 +70,8 @@ alias l='ls -alF --color=auto'
 alias ll='ls -alF --color=auto'
 alias mkdir='mkdir -p'
 alias ..='cd ..'
+alias grep="grep --color=always"
+
 
 #export NDAS_PARTNER='daimler'
 alias ndas=' cd ~/git-ndas/ndas && source scripts/envsetup.sh && export NDAS_ARTIFACT_REPOSITORY=ndas-daimler && buildauth login'
@@ -79,3 +81,5 @@ export PATH=$PATH:$HOME/.local/bin
 mg (){
 	~/.restore_mg.sh $@
 }
+
+
