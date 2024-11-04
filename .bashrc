@@ -78,8 +78,8 @@ alias ndas=' cd ~/git-ndas/ndas && source scripts/envsetup.sh && export NDAS_ART
 
 export PATH=$PATH:$HOME/.local/bin
 
-mg (){
-	~/.restore_mg.sh $@
-}
+#mg (){
+#	~/.restore_mg.sh $@
+#}
 
 

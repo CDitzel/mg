@@ -23,8 +23,8 @@ global-set-key "\^[p" scroll-one-line-down
 global-set-key "\^[n" scroll-one-line-up
 global-set-key "\^[e" forward-paragraph
 global-set-key "\^[a" backward-paragraph
-global-set-key "\^c\^j" list-buffers
-global-set-key "\^t" switch-to-buffer
+#global-set-key "\^c\^j" list-buffers
+global-set-key "\^t" list-buffers
 global-set-key "\^xg" revert-buffer
 local-set-key "^x\^j" dired-up-directory
 global-set-key "\^[s" start-kbd-macro
