@@ -80,7 +80,20 @@ filevisit(int f, int n)
 			killbuffer(bp);
 		return (status);
 	}
-	return (TRUE);
+    
+    for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+    {
+ 	   if (b->b_bufp == bp)
+	   {
+	      b->b_bufp = bp->b_bufp;
+	      // bp->b_bufp = bheadp->b_bufp; // skip blist buffer?
+	      bp->b_bufp = bheadp;
+	      bheadp = bp;
+	      break;
+	    }
+	}
+
+    return (TRUE);
 }
 
 /*

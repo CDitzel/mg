@@ -351,6 +351,7 @@ d_undelbak(int f, int n)
 int
 d_findfile(int f, int n)
 {
+
 	struct buffer	*bp;
 	int		 s;
 	char		 fname[NFILEN];
@@ -361,6 +362,32 @@ d_findfile(int f, int n)
 		bp = dired_(fname);
 	else
 		bp = findbuffer(fname);
+        
+    printf("find FILE: %s", bp->b_bname);
+
+    #if 1
+    // cditzel: order buffer-list by last visited instead of initial opening
+    //for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+    //	printf("%s\t", b->b_bname);
+        
+	for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+    {
+ 	   if (b->b_bufp == bp)
+	   {
+	      b->b_bufp = bp->b_bufp;
+	      // bp->b_bufp = bheadp->b_bufp; // skip blist buffer?
+	      bp->b_bufp = bheadp;
+	      bheadp = bp;
+	      break;
+	    }
+	}
+	printf("----------------\t");
+    for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+    	printf("%s\t", b->b_bname);
+	#endif
+        
+
+    
 	if (bp == NULL)
 		return (FALSE);
 	curbp = bp;
@@ -1138,18 +1165,28 @@ dired_jump(int f, int n)
 		return (FALSE);
 
 	fname = curbp->b_fname;
+    
 
+        
 	if ((bp = dired_(dname)) == NULL)
 		return (FALSE);
+
 	curbp = bp;
 
+
+    
 	ret = showbuffer(bp, curwp, WFFULL | WFMODE);
+
+        
 	if (ret != TRUE)
 		return ret;
-
+    
 	fname = adjustname(fname, TRUE);
-	if (fname != NULL)
+
+	if (fname != NULL){
 		gotofile(fname);
+    }
+
 
 	return (TRUE);
 }
