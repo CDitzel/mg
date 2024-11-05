@@ -1,4 +1,5 @@
 
+
 make-backup-files 0
 display-help-mode 0
 
@@ -12,6 +13,7 @@ auto-execute "*.cpp" c-mode
 auto-execute "*.c" c-mode
 auto-execute "*.hpp" c-mode
 auto-execute "*.h" c-mode
+
 
 global-set-key "\^h" delete-backward-char
 global-set-key "\^[h" backward-kill-word
@@ -36,5 +38,4 @@ global-set-key "\^[o" other-window
 global-set-key "\^x\^k" kill-buffer
 global-set-key "\^[a" beg-of-block
 global-set-key "\^[e" end-of-block
-
 

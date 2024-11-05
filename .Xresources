@@ -6,6 +6,9 @@ xTerm*metaSendsEscape: true
 XTerm*toolBar: false
 XTerm*menuBar: false
 XTerm*scrollBar: false
+xterm*background: black
+xterm*foreground: grey
+XTerm*cursorColor: green
 
 
 xterm*selectToClipboard: true
