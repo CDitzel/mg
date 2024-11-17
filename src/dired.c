@@ -363,8 +363,7 @@ d_findfile(int f, int n)
 	else
 		bp = findbuffer(fname);
         
-    printf("find FILE: %s", bp->b_bname);
-
+    
     #if 1
     // cditzel: order buffer-list by last visited instead of initial opening
     //for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
@@ -381,9 +380,9 @@ d_findfile(int f, int n)
 	      break;
 	    }
 	}
-	printf("----------------\t");
-    for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
-    	printf("%s\t", b->b_bname);
+	//printf("----------------\t");
+    //for (struct buffer *b = bheadp; b != NULL; b = b->b_bufp)
+    //	printf("%s\t", b->b_bname);
 	#endif
         
 

@@ -50,17 +50,35 @@ backword(int f, int n)
 int
 forwword(int f, int n)
 {
+    static int ctr = 0;    
 	if (n < 0)
 		return (backword(f | FFRAND, -n));
+    int b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+    int c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);        
 	while (n--) {
 		while (inword() == FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
+            printf("before: %d\t", b);
+            printf("current: %d\t", c);
+            b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);    
 		}
+
+		// HALLO_wieGehtEsDir_heuteMORGEN
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
+            b = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+            printf("b: %d\t", b);
+            printf("c: %d\t", c);
+            if (b == 1 && c == 1)
+                return (TRUE);
+	
 		}
+//    printf("b: %d\t", b);
+//    printf("c: %d\t", c);
 	}
 	return (TRUE);
 }
@@ -500,7 +518,9 @@ out:
 int
 inword(void)
 {
+//        printf("%d ", curwp->w_dotp->l_text[curwp->w_doto]);
 	/* can't use lgetc in ISWORD due to bug in OSK cpp */
 	return (curwp->w_doto != llength(curwp->w_dotp) &&
 	    ISWORD(curwp->w_dotp->l_text[curwp->w_doto]));
+
 }
