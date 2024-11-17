@@ -73,7 +73,7 @@ forwword(int f, int n)
             c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);    
 		}
 
-		// HALLO_wie GehtEsDir_heute_MORGEN
+		// HALLO_wie GehtsDir_heute_MORGEN
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
@@ -447,11 +447,18 @@ delfword(int f, int n)
 				goto out;
 			++size;
 		}
+        int b,c;
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				/* hit the end of the buffer */
 				goto out;
+            
 			++size;
+            
+            b = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+            if (b == 1 && c == 1)
+                goto out;
 		}
 	}
 out:
