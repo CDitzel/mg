@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# delleadwhite and trailwhtie bind to keys
 
 CURRENT_DIR=$(dirname "$(realpath "$0")")
 REMOTE_URL="git-av.nvidia.com"
@@ -16,10 +15,10 @@ REMOTE_URL="git-av.nvidia.com"
 ./autogen.sh
 #clang-format -i -style=LLVM src/*.c src/*.h
 make clean
-./configure -q -n --with-startup="$(pwd)"/.mg --disable-togglenl --enable-size-optimizations --without-tutorial --without-docs --enable-silent-rules --disable-dependency-tracking #--without-curses
+./configure -q -n --with-startup="$(pwd)"/.mg --disable-togglenl --enable-size-optimizations --without-tutorial --enable-silent-rules --disable-dependency-tracking #--without-curses --without-docs
 
 make -j$(nproc)
-#sudo make install
+sudo make install
 
 # git-av 
 grep -i $REMOTE_URL .netrc || echo -e "machine $REMOTE_URL \n\t login carsten.ditzel@mercedes-benz.com \n\t password " > ~/.netrc

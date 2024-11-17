@@ -35,9 +35,17 @@ backword(int f, int n)
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
 		}
+        int a,c;
 		while (inword() != FALSE) {
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
+                
+            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+            a = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+
+            if (a == 1 && c == 1)
+                return (TRUE);
+	       
 		}
 	}
 	return (forwchar(FFRAND, 1));
@@ -65,7 +73,7 @@ forwword(int f, int n)
             c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);    
 		}
 
-		// HALLO_wieGehtEsDir_heuteMORGEN
+		// HALLO_wie GehtEsDir_heute_MORGEN
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
