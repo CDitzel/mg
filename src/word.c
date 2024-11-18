@@ -30,23 +30,44 @@ backword(int f, int n)
 		return (forwword(f | FFRAND, -n));
 	if (backchar(FFRAND, 1) == FALSE)
 		return (FALSE);
+		int a,b,b2,c;	
 	while (n--) {
 		while (inword() == FALSE) {
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
+                                b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);                    
+                b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+                c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+                a = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+            if (c == 0 && b == 1 && a == 0 && b2 != 0)
+                return (TRUE);                
+            if (c == 1 && b == 0 && a == 1)
+                return (TRUE);
+            if (c == 1 && b == 0 && a == 0)
+                return (TRUE);                
+            if (c == 0 && b == 0 && a == 0 && !ISWORD(curwp->w_dotp->l_text[curwp->w_doto-1]))
+                return (TRUE);                
+
 		}
-        int a,c;
+
 		while (inword() != FALSE) {
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
-                
-            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
-            a = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto+1]);
 
-            if (a == 1 && c == 1)
+                b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);                    
+                b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+                c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+                a = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+            if (c == 0 && b == 1 && a == 0 && b2 != 0)
+                return (TRUE);                
+            if (c == 1 && b == 0 && a == 1)
                 return (TRUE);
-	       
-		}
+            if (c == 1 && b == 0 && a == 0)
+                return (TRUE);                
+            if (c == 0 && b == 0 && a == 0 && !ISWORD(curwp->w_dotp->l_text[curwp->w_doto-1]))
+                return (TRUE);                
+
+        }
 	}
 	return (forwchar(FFRAND, 1));
 }
@@ -61,35 +82,47 @@ forwword(int f, int n)
     static int ctr = 0;    
 	if (n < 0)
 		return (backword(f | FFRAND, -n));
-    int b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
-    int c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);        
+    int a,b,b2,c;
+
 	while (n--) {
 		while (inword() == FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
-            printf("before: %d\t", b);
-            printf("current: %d\t", c);
-            b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
-            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);    
-		}
+        }
 
-		// HALLO_wie GehtsDir_heute_MORGEN
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				return (TRUE);
-            b = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto-1]);
-            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
-            printf("b: %d\t", b);
-            printf("c: %d\t", c);
-            if (b == 1 && c == 1)
+			if (curwp->w_doto != llength(curwp->w_dotp)){
+              b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);
+              b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);                 
+              c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+              a = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+
+              if (c == 0 && b == 1 && a == 0 && b2 != 0)
                 return (TRUE);
-	
+              if (c == 1 && b == 0 && a == 1)
+                return (TRUE);
+              if (c == 1 && b == 0 && a == 0)
+                return (TRUE);
+            }
 		}
-//    printf("b: %d\t", b);
-//    printf("c: %d\t", c);
 	}
 	return (TRUE);
 }
+
+#if 0
+MODELname ModelNAME word WIEDER
+File Edit Options Buffers Tools Help
+thisIsAn
+
+thisIsAnExampleOfCamelCaseTextThatYouCanUseForYourProject
+
+hallo wie gehts
+naja
+
+GanzGUT
+#endif
 
 /*
  * Transpose 2 words. 
@@ -447,7 +480,7 @@ delfword(int f, int n)
 				goto out;
 			++size;
 		}
-        int b,c;
+        int a,b,b2,c;
 		while (inword() != FALSE) {
 			if (forwchar(FFRAND, 1) == FALSE)
 				/* hit the end of the buffer */
@@ -455,10 +488,18 @@ delfword(int f, int n)
             
 			++size;
             
-            b = ISLOWER(curwp->w_dotp->l_text[curwp->w_doto-1]);
-            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
-            if (b == 1 && c == 1)
+              b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);
+              b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);                 
+              c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+              a = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+
+              if (c == 0 && b == 1 && a == 0 && b2 != 0)
                 goto out;
+              if (c == 1 && b == 0 && a == 1)
+			    goto out;
+              if (c == 1 && b == 0 && a == 0)
+				goto out;
+
 		}
 	}
 out:
@@ -466,6 +507,10 @@ out:
 	curwp->w_doto = doto;
 	return (ldelete(size, KFORW));
 }
+
+
+
+
 
 /*
  * Kill backwards by "n" words.  The rules for success and failure are now
@@ -501,6 +546,7 @@ delbword(int f, int n)
 		/* hit buffer start */
 		return (TRUE);
 
+    int a, b, b2, c;    
 	/* one deleted */
 	size = 1;
 	while (n--) {
@@ -515,6 +561,23 @@ delbword(int f, int n)
 				/* hit buffer start */
 				goto out;
 			++size;
+
+
+	
+            b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);
+            b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
+            c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
+            a = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto+1]);
+            if (c == 0 && b == 1 && a == 0 && b2 != 0)
+                goto out;
+            if (c == 1 && b == 0 && a == 1)
+                goto out;
+            if (c == 1 && b == 0 && a == 0)
+                goto out;
+            if (c == 0 && b == 0 && a == 0 && !ISWORD(curwp->w_dotp->l_text[curwp->w_doto-1]))
+                goto out;
+
+            
 		}
 	}
 	if (forwchar(FFRAND, 1) == FALSE)
