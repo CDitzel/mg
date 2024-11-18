@@ -3,16 +3,16 @@
 make-backup-files 0
 display-help-mode 0
 
-display-time-mode 1
+#display-time-mode 1
 
-set-default-mode notab indent cmode
+#set-default-mode notab indent cmode
 
 set-tab-width 4
  
-auto-execute "*.cpp" c-mode
-auto-execute "*.c" c-mode
-auto-execute "*.hpp" c-mode
-auto-execute "*.h" c-mode
+#auto-execute "*.cpp" c-mode
+#auto-execute "*.c" c-mode
+#auto-execute "*.hpp" c-mode
+#auto-execute "*.h" c-mode
 
 
 global-set-key "\^h" delete-backward-char

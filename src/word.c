@@ -35,6 +35,7 @@ backword(int f, int n)
 		while (inword() == FALSE) {
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
+			if (curwp->w_doto != llength(curwp->w_dotp))	{                
                                 b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);                    
                 b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
                 c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
@@ -47,13 +48,13 @@ backword(int f, int n)
                 return (TRUE);                
             if (c == 0 && b == 0 && a == 0 && !ISWORD(curwp->w_dotp->l_text[curwp->w_doto-1]))
                 return (TRUE);                
-
+        }
 		}
 
 		while (inword() != FALSE) {
 			if (backchar(FFRAND, 1) == FALSE)
 				return (TRUE);
-
+			if (curwp->w_doto != llength(curwp->w_dotp))	{
                 b2 = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-2]);                    
                 b = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto-1]);
                 c = ISUPPER(curwp->w_dotp->l_text[curwp->w_doto]);
@@ -66,7 +67,7 @@ backword(int f, int n)
                 return (TRUE);                
             if (c == 0 && b == 0 && a == 0 && !ISWORD(curwp->w_dotp->l_text[curwp->w_doto-1]))
                 return (TRUE);                
-
+        }
         }
 	}
 	return (forwchar(FFRAND, 1));

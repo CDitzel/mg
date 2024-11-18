@@ -18,11 +18,11 @@ make clean
 ./configure -q -n --with-startup="$(pwd)"/.mg --disable-togglenl --enable-size-optimizations --without-tutorial --enable-silent-rules --disable-dependency-tracking #--without-curses --without-docs
 
 make -j$(nproc)
-sudo make install
+#sudo make install
 
 # git-av 
-grep -i $REMOTE_URL .netrc || echo -e "machine $REMOTE_URL \n\t login carsten.ditzel@mercedes-benz.com \n\t password " > ~/.netrc
-echo "git clone "https://carsten.ditzel%40mercedes-benz.com@git-av.nvidia.com/r/a/ndas" && (cd "ndas" && mkdir -p .git/hooks && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://carsten.ditzel%40mercedes-benz.com@git-av.nvidia.com/r/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)"
+#grep -i $REMOTE_URL .netrc || echo -e "machine $REMOTE_URL \n\t login carsten.ditzel@mercedes-benz.com \n\t password " > ~/.netrc
+#echo "git clone "https://carsten.ditzel%40mercedes-benz.com@git-av.nvidia.com/r/a/ndas" && (cd "ndas" && mkdir -p .git/hooks && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://carsten.ditzel%40mercedes-benz.com@git-av.nvidia.com/r/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)"
 
 ln -svf $CURRENT_DIR/.bashrc ~/.bashrc
 ln -svf $CURRENT_DIR/.Xresources ~/.Xresources
