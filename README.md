@@ -1,4 +1,4 @@
-Micro (GNU) Emacs
+Nano Emacs
 =================
 [![License Badge][]][License] [![GitHub Status][]][GitHub] [![Coverity Status][]][Coverity Scan]
 
