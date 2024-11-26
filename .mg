@@ -4,7 +4,7 @@ display-help-mode 0
 
 #set-default-mode notab indent cmode
 
-set-tab-width 2
+set-tab-width 4
  
 #auto-execute "*.cpp" c-mode
 

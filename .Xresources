@@ -1,3 +1,6 @@
+xterm*faceName: Monospace
+xterm*faceSize: 14
+
 xterm*VT100.geometry: 130x50
 XTerm*geometry: 80x24
 XTerm*dynamicColors: true

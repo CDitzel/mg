@@ -389,6 +389,8 @@ d_findfile(int f, int n)
     
 	if (bp == NULL)
 		return (FALSE);
+  // cditzel: make old dired buffer vanish when new one is opened
+	killbuffer(curbp);
 	curbp = bp;
 	if (showbuffer(bp, curwp, WFFULL) != TRUE)
 		return (FALSE);
@@ -411,11 +413,17 @@ d_updirectory(int f, int n)
 	bp = dired_(fname);
 	if (bp == NULL)
 		return (FALSE);
+
+  // cditzel: make old dired buffer vanish when new one is opened
+	
+	killbuffer(curbp);
+
 	curbp = bp;
 	if (showbuffer(bp, curwp, WFFULL) != TRUE)
 		return (FALSE);
 	if (bp->b_fname[0] != 0)
 		return (TRUE);
+	
 	return (readin(fname));
 }
 
@@ -433,6 +441,7 @@ d_ffotherwindow(int f, int n)
 		return (FALSE);
 	if ((wp = popbuf(bp, WNONE)) == NULL)
 		return (FALSE);
+	killbuffer(curbp); // cditzel: make old dired buffer vanish when new one is opened
 	curbp = bp;
 	curwp = wp;
 	if (bp->b_fname[0] != 0)
