@@ -116,7 +116,7 @@ usebufname(const char *bufp)
 
 	// cditzel: skip dired buffers
 	while (bp->b_flag & BFREADONLY)
-        bp = bp->b_altb;
+	     bp = bp->b_altb;
 
 	/* and put it in current window */
 	curbp = bp;
@@ -275,8 +275,8 @@ killbuffer(struct buffer *bp)
 	bp2 = NULL;				/* Find the header.	 */
 	bp1 = bheadp;
 	while (bp1 != bp) {
-		if (bp1->b_altb == bp)
-			bp1->b_altb = (bp->b_altb == bp1) ? NULL : bp->b_altb;
+		if (bp1->b_altb == bp) // cditzel: make switch-to-buffer not segfault
+			bp1->b_altb = (bp->b_altb == bp1) ? bp->b_altb : bp->b_altb;
 		bp2 = bp1;
 		bp1 = bp1->b_bufp;
 	}
@@ -286,8 +286,8 @@ killbuffer(struct buffer *bp)
 	else
 		bp2->b_bufp = bp1;
 	while (bp1 != NULL) {			/* Finish with altb's	 */
-		if (bp1->b_altb == bp)
-			bp1->b_altb = (bp->b_altb == bp1) ? NULL : bp->b_altb;
+		if (bp1->b_altb == bp) // cditzel: make switch-to-buffer not segfault
+			bp1->b_altb = (bp->b_altb == bp1) ? bp->b_altb->b_bufp : bp->b_altb;
 		bp1 = bp1->b_bufp;
 	}
 

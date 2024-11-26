@@ -1,8 +1,0 @@
-fix seg faults whenn only 1 buffer in both buffer switching modes
-improve isnonblacnks function
-replace 125 with '{'
-fix op brace togo one cursor right
-remove ref passing
-functin decisin depending on file extension
-going up indentation sometimes doesnt find first hit
-use 'do not ocntinue after end of buffer fucntioanlity' in same file function
